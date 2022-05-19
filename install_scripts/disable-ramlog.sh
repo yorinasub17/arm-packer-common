@@ -23,7 +23,7 @@ function print_usage {
 }
 
 function is_armbian {
-  source /etc/os_release
+  source /etc/os-release
   [[ "$PRETTY_NAME" =~ ^Armbian ]]
 }
 
