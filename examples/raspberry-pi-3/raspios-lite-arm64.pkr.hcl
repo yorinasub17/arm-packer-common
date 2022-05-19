@@ -1,3 +1,7 @@
+# ---------------------------------------------------------------------------------------------------------------------
+# Packer settings
+# ---------------------------------------------------------------------------------------------------------------------
+
 packer {
   required_plugins {
     git-shell = {
@@ -7,15 +11,36 @@ packer {
   }
 }
 
+# ---------------------------------------------------------------------------------------------------------------------
+# Inputs
+# ---------------------------------------------------------------------------------------------------------------------
+
+variable "raspios_img_url" {
+  description = "The URL to the raspios lite img file to build from."
+  type        = string
+  default     = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2022-04-07/2022-04-04-raspios-bullseye-arm64-lite.img.xz"
+}
+
+variable "arm_packer_common_version" {
+  description = "The version of the arm-packer-common scripts to use. This should be a git ref (branch or tag) of this repo."
+  type        = string
+  default     = "main"
+}
+
+# ---------------------------------------------------------------------------------------------------------------------
+# BUILD Config
+# ---------------------------------------------------------------------------------------------------------------------
+
 # We configure the arm builder to start with the official Raspberry Pi OS image.
 source "arm" "raspios" {
   qemu_binary_source_path      = "/usr/bin/qemu-aarch64-static"
   qemu_binary_destination_path = "/usr/bin/qemu-aarch64-static"
 
-  file_urls             = [local.img_url]
-  file_checksum_url     = "${local.img_url}.sha256"
+  file_urls             = [var.raspios_img_url]
+  file_checksum_url     = "${var.raspios_img_url}.sha256"
   file_checksum_type    = "sha256"
-  file_target_extension = "zip"
+  file_target_extension = "xz"
+  file_unarchive_cmd    = ["xz", "-d", "$ARCHIVE_PATH"]
   image_build_method    = "resize"
   image_path            = "raspios-arm64.img"
   image_size            = "2G"
@@ -49,7 +74,7 @@ build {
 
   provisioner "git-shell" {
     source = "https://github.com/yorinasub17/arm-packer-common.git"
-    ref    = "main"
+    ref    = "${var.arm_packer_common_version}"
 
     # Install bash-commons
     script {
@@ -84,10 +109,4 @@ build {
       path = "install_scripts/uninstall-bash-commons.sh"
     }
   }
-}
-
-
-# Convenient local variables
-locals {
-  img_url = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-${var.raspios_version}/${var.raspios_version}-raspios-bullseye-arm64-lite.zip""
 }

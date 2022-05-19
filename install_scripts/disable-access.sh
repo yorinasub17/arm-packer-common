@@ -12,9 +12,6 @@ fi
 source "$BASH_COMMONS_DIR/log.sh"
 source "$BASH_COMMONS_DIR/assert.sh"
 
-# Source the OS information
-source /etc/os-release
-
 function print_usage {
   echo_stderr
   echo_stderr "Usage: disable-access.sh [OPTIONS]"
@@ -31,6 +28,7 @@ function print_usage {
 }
 
 function is_armbian {
+  source /etc/os-release
   [[ "$PRETTY_NAME" =~ ^Armbian ]]
 }
 

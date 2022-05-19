@@ -12,9 +12,6 @@ if [[ ! -d "$BASH_COMMONS_DIR" ]]; then
 fi
 source "$BASH_COMMONS_DIR/log.sh"
 
-# Source the OS information
-source /etc/os-release
-
 function print_usage {
   echo_stderr
   echo_stderr 'Usage: remove-resize.sh [OPTIONS]'
@@ -26,15 +23,16 @@ function print_usage {
   echo_stderr '  remove-resize.sh'
 }
 
-function is_raspbian {
-  [[ "$ID" == 'raspbian' ]]
+function is_raspios {
+  [[ -f '/usr/lib/raspi-config/init_resize.sh' ]]
 }
 
 function is_armbian {
+  source /etc/os-release
   [[ "$PRETTY_NAME" =~ ^Armbian ]]
 }
 
-function remove_resize_raspbian {
+function remove_resize_raspios {
   sed -i -e 's| init=/usr/lib/raspi-config/init_resize.sh||g' /boot/cmdline.txt
   rm /usr/lib/raspi-config/init_resize.sh
   rm /etc/init.d/resize2fs_once
@@ -64,8 +62,8 @@ function run {
     shift
   done
 
-  if is_raspbian; then
-    remove_resize_reaspbian
+  if is_raspios; then
+    remove_resize_raspios
   elif is_armbian; then
     remove_resize_armbian
   else
