@@ -18,7 +18,13 @@ packer {
 variable "raspios_img_url" {
   description = "The URL to the raspios lite img file to build from."
   type        = string
-  default = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2022-04-07/2022-04-04-raspios-bullseye-arm64-lite.img.xz"
+  default     = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2022-04-07/2022-04-04-raspios-bullseye-arm64-lite.img.xz"
+}
+
+variable "arm_packer_common_version" {
+  description = "The version of the arm-packer-common scripts to use. This should be a git ref (branch or tag) of this repo."
+  type        = string
+  default     = "main"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -68,7 +74,7 @@ build {
 
   provisioner "git-shell" {
     source = "https://github.com/yorinasub17/arm-packer-common.git"
-    ref    = "main"
+    ref    = "${var.arm_packer_common_version}"
 
     # Install bash-commons
     script {
