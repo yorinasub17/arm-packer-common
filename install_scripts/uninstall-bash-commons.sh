@@ -4,6 +4,13 @@
 
 set -e
 
+readonly BASH_COMMONS_DIR="/opt/gruntwork/bash-commons"
+if [[ ! -d "$BASH_COMMONS_DIR" ]]; then
+  echo "ERROR: this script requires that bash-commons is installed in $BASH_COMMONS_DIR. See https://github.com/gruntwork-io/bash-commons for more info."
+  exit 1
+fi
+source "$BASH_COMMONS_DIR/log.sh"
+
 function print_usage {
   echo_stderr
   echo_stderr 'Usage: uninstall-bash-commons.sh [OPTIONS]'
@@ -34,11 +41,11 @@ function run {
     shift
   done
 
-  log_info 'Uninstalling bash-commons (removing /opt/gruntwork folder)'
-  rm -r /opt/gruntwork
   log_info 'Uninstalling gruntwork-install and fetch'
   rm /usr/local/bin/gruntwork-install
   rm /usr/local/bin/fetch
+  log_info 'Uninstalling bash-commons (removing /opt/gruntwork folder)'
+  rm -r /opt/gruntwork
 }
 
 run "$@"
