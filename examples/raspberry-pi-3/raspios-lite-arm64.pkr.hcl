@@ -33,7 +33,8 @@ source "arm" "raspios" {
   file_urls             = [local.img_url]
   file_checksum_url     = "${local.img_url}.sha256"
   file_checksum_type    = "sha256"
-  file_target_extension = "zip"
+  file_target_extension = "xz"
+  file_unarchive_cmd    = ["xz", "-d", "$ARCHIVE_PATH"]
   image_build_method    = "resize"
   image_path            = "raspios-arm64.img"
   image_size            = "2G"
@@ -107,5 +108,5 @@ build {
 
 # Convenient local variables
 locals {
-  img_url = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-${var.raspios_version}/${var.raspios_version}-raspios-bullseye-arm64-lite.zip"
+  img_url = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-${var.raspios_version}/${var.raspios_version}-raspios-bullseye-arm64-lite.img.xz"
 }
