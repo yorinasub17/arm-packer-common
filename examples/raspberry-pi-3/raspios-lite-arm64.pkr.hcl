@@ -89,5 +89,5 @@ build {
 
 # Convenient local variables
 locals {
-  img_url = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-${var.raspios_version}/${var.raspios_version}-raspios-bullseye-arm64-lite.zip""
+  img_url = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-${var.raspios_version}/${var.raspios_version}-raspios-bullseye-arm64-lite.zip"
 }
