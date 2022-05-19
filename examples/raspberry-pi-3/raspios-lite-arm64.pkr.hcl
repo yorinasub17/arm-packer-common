@@ -15,10 +15,10 @@ packer {
 # Inputs
 # ---------------------------------------------------------------------------------------------------------------------
 
-variable "raspios_version" {
-  description = "The version of raspios-lite to install."
+variable "raspios_img_url" {
+  description = "The URL to the raspios lite img file to build from."
   type        = string
-  default     = "2022-04-04"
+  default = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-2022-04-07/2022-04-04-raspios-bullseye-arm64-lite.img.xz"
 }
 
 # ---------------------------------------------------------------------------------------------------------------------
@@ -30,8 +30,8 @@ source "arm" "raspios" {
   qemu_binary_source_path      = "/usr/bin/qemu-aarch64-static"
   qemu_binary_destination_path = "/usr/bin/qemu-aarch64-static"
 
-  file_urls             = [local.img_url]
-  file_checksum_url     = "${local.img_url}.sha256"
+  file_urls             = [var.raspios_img_url]
+  file_checksum_url     = "${var.raspios_img_url}.sha256"
   file_checksum_type    = "sha256"
   file_target_extension = "xz"
   file_unarchive_cmd    = ["xz", "-d", "$ARCHIVE_PATH"]
@@ -103,10 +103,4 @@ build {
       path = "install_scripts/uninstall-bash-commons.sh"
     }
   }
-}
-
-
-# Convenient local variables
-locals {
-  img_url = "https://downloads.raspberrypi.org/raspios_lite_arm64/images/raspios_lite_arm64-${var.raspios_version}/${var.raspios_version}-raspios-bullseye-arm64-lite.img.xz"
 }
