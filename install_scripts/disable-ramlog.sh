@@ -22,6 +22,11 @@ function print_usage {
   echo_stderr '  disable-ramlog.sh'
 }
 
+function is_armbian {
+  source /etc/os_release
+  [[ "$PRETTY_NAME" =~ ^Armbian ]]
+}
+
 function run {
   while [[ $# -gt 0 ]]; do
     local key="$1"

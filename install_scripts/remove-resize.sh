@@ -27,10 +27,12 @@ function print_usage {
 }
 
 function is_raspbian {
+  source /etc/os_release
   [[ "$ID" == 'raspbian' ]]
 }
 
 function is_armbian {
+  source /etc/os_release
   [[ "$PRETTY_NAME" =~ ^Armbian ]]
 }
 
@@ -65,7 +67,7 @@ function run {
   done
 
   if is_raspbian; then
-    remove_resize_reaspbian
+    remove_resize_raspbian
   elif is_armbian; then
     remove_resize_armbian
   else
