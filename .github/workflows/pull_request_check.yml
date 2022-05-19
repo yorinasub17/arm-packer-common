@@ -1,0 +1,22 @@
+name: Pull Request Check
+
+on: pull_request
+
+jobs:
+  smoketest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # Since it's hard to test these scripts without an actual board, we only do a minimal sanity check by building the
+      # example.
+      - name: test
+        run: |
+          docker run \
+            --rm \
+            --privileged \
+            -v /dev:/dev \
+            -v ${PWD}/examples/raspberry-pi-3:/build \
+            mkaczanowski/packer-builder-arm \
+            build raspios-lite-arm64.pkr.hcl
