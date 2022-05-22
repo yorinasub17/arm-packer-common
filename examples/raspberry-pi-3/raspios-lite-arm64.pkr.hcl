@@ -104,6 +104,11 @@ build {
       args = ["--user", "pi"]
     }
 
+    # Update all apt packages to latest
+    script {
+      path = "install_scripts/update-apt-packages.sh"
+    }
+
     # Finally, uninstall bash-commons since it won't be necessary after the scripts are run.
     script {
       path = "install_scripts/uninstall-bash-commons.sh"
