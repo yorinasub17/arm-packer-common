@@ -43,8 +43,8 @@ function run {
   dphys-swapfile swapoff
   dphys-swapfile uninstall
   update-rc.d dphys-swapfile remove
-  DEBIAN_FRONTEND=noninteractive apt purge -y dphys-swapfile
-  DEBIAN_FRONTEND=noninteractive apt autoremove -yy
+  DEBIAN_FRONTEND=noninteractive apt-get purge -y dphys-swapfile
+  DEBIAN_FRONTEND=noninteractive apt-get autoremove -yy
 }
 
 run "$@"
