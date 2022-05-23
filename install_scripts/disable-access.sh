@@ -33,8 +33,8 @@ function is_armbian {
 }
 
 function remove_ssh {
-  DEBIAN_FRONTEND=noninteractive apt purge -y openssh-server
-  DEBIAN_FRONTEND=noninteractive apt autoremove -yy
+  DEBIAN_FRONTEND=noninteractive apt-get purge -y openssh-server
+  DEBIAN_FRONTEND=noninteractive apt-get autoremove -yy
 }
 
 function disable_root {
