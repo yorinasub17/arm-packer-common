@@ -19,5 +19,5 @@ jobs:
             --entrypoint /bin/bash \
             -v /dev:/dev \
             -v ${PWD}/examples/raspberry-pi-3:/build \
-            mkaczanowski/packer-builder-arm \
+            mkaczanowski/packer-builder-arm:1.0.3 \
             -c "/entrypoint.sh init raspios-lite-arm64.pkr.hcl && /entrypoint.sh build -var arm_packer_common_version=${{ github.sha }} raspios-lite-arm64.pkr.hcl"
