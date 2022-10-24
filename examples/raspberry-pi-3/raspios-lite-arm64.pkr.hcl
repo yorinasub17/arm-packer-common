@@ -5,7 +5,7 @@
 packer {
   required_plugins {
     git-shell = {
-      version = ">=v0.1.0"
+      version = "=v0.2.0"
       source  = "github.com/yorinasub17/git-shell"
     }
   }

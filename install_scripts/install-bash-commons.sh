@@ -55,4 +55,6 @@ function run {
     --tag "$version"
 }
 
-run "$@"
+echo "DEBUG!!!!"
+
+#run "$@"
