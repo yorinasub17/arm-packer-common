@@ -9,6 +9,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v2
+        with:
+          platforms: linux/amd64,linux/arm64
+
       # Since it's hard to test these scripts without an actual board, we only do a minimal sanity check by building the
       # example.
       - name: test
